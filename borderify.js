@@ -1,7 +1,5 @@
-/*just main function*/
 
-//window.onload
-//document.getElementById('flex') =  function() {
+
 elementExist();
 function elementExist() {
   if (document.getElementById('flex') != null) {
@@ -13,19 +11,11 @@ function elementExist() {
   }
 }	
 	
-//window.onload = function() {
-//console.log("Extension loaded");
-
-
-
 function setAttributes(el, attrs) {
   for(var key in attrs) {
     el.setAttribute(key, attrs[key]);
   }
 }
-///need function to make js in html
-
-
 
 function createCustomButton(butName) {
 	
@@ -114,13 +104,12 @@ button.addEventListener("click", function() {
 	var itag_nondash_MP4_360_https = '(https.*?[^\,\\\\]*)';   
 	var itag_nondash_MP4_360_sig = 's=(\w+\.\w+)';  
 	var re_sub = 'captionTracks\.*?(https.*?)\",';
-    //	var re_good_sub = '/\\\"vssId\\\"\:\\\"\..*?(http.*?lang=.*?)\\\",/gm';   //for future
 	/* reg exp for videos */ 
 	var Qual_720 = new RegExp(quality_720);  
 	var MP4_360 = new RegExp(itag_nondash_MP4_360);
 	var MP4_360_https = new RegExp(itag_nondash_MP4_360_https);  	 
 	var MP4_360_sig = new RegExp(itag_nondash_MP4_360_sig);  
-    var subtitles = new RegExp(re_sub);  //reg exp for subtitles
+   	var subtitles = new RegExp(re_sub);  //reg exp for subtitles
 	//var good_subtitles = new RegExp(re_good_sub) // for future
 	let j;    //sub
 	let m;    //720
@@ -140,36 +129,26 @@ button.addEventListener("click", function() {
 		if ((m = Qual_720.exec(html_text)) !== null) {
 			//console.log(m[1]);   //debug для http 
 		    //console.log(decodeURIComponent(Qual_720.exec(html_text)[1]));
-	        var url_720_dec = decodeURIComponent(m[1]);
+	            var url_720_dec = decodeURIComponent(m[1]);
 		    //console.log(vid_720_http);
 		    var str_div = '<center> <p> <a id="a1-div-a" class="text-center a1-div-a" href=" '+
 		    ''+ url_720_dec + '&title=720p" type="video/mp4" download>Download 720p </a> </center>';
 		    //console.log(str_div);
 		     
-			var p = document.createElement("p");
-			var a = document.createElement("a");
-			var center = document.createElement("center");
+		    var p = document.createElement("p");
+		    var a = document.createElement("a");
+		    var center = document.createElement("center");
          
-			a.appendChild(document.createTextNode("Donwload 720p"));
+		    a.appendChild(document.createTextNode("Donwload 720p"));
 			
-			p.appendChild(a);
-			center.appendChild(p);
+		    p.appendChild(a);
+		    center.appendChild(p);
 	
-			get_div.appendChild(center);
+		    get_div.appendChild(center);
 			
 			
-			setAttributes(a, {"id": "a1-div-a", "class": "text-center a1-div-a", "href": url_720_dec+'&title=720p', "type": "video/mp4", "align": "center" });
-			
-			 
-		   //get_div.innerHTML += str_div;
-		
-		
-		
-			//document.getElementById("a1-div-a").href=str_div;
-	
-		
-			}
-
+		    setAttributes(a, {"id": "a1-div-a", "class": "text-center a1-div-a", "href": url_720_dec+'&title=720p', "type": "video/mp4", "align": "center" });
+		}
 			/*href 360p text if all ok */
 		if ((n = MP4_360.exec(html_text)) !== null) {
 			var url_360_dec = (MP4_360_https.exec(decodeURIComponent(n)));
@@ -191,18 +170,13 @@ button.addEventListener("click", function() {
 	
 			get_div.appendChild(center);
 			
-			
 			setAttributes(a, {"id": "a1-div-a", "target": "_blank", "class": "text-center a1-div-a", "href": url_360_dec[1]+'&title=360p', "type": "video/mp4", "align": "center" });
-			
-			
-			
 		}
 	}
 	/* video with protection */
 	else {
 		//get_div.innerHTML += "PROTECTED"; 
 		var baseJS_src = document.head.getElementsByTagName('script')['player/base'].src;
-		
 		var xhr2 = new XMLHttpRequest();
 		xhr2.addEventListener("load", function(){ baseJS_text = this.responseText;  });
 		xhr2.open("GET", baseJS_src, false); 
@@ -251,11 +225,7 @@ button.addEventListener("click", function() {
 
 			 
 	if ((j = subtitles.exec(html_text)) !== null) {
-	
-	
-	
-	
-		
+
 		var clear_subtitles = j[1].replace(/\\\\u0026/g, "&");
 		var clear_subtitles = clear_subtitles.replace(/\\/g, "");
 		var clear_subtitles = decodeURIComponent(clear_subtitles);
@@ -370,21 +340,11 @@ button.addEventListener("click", function() {
 		'<a id="subSelected" class="text-center a1-div-a" '+
 		'href="'+ clear_subtitles + '"  type="xml" name="subtitles.xml" content="xml"  '+
 		'download > Download subtitles </a> </center> ';
-		
-		//var re_better_sub =  /(\{"baseUrl.*?(http.*?)\".*?(vssId).*?\"\:\".(.*?)\".*?\})+/gm;
-		
-		
-		
+	
 		//alert(clear_subtitles);  //debug subtitles url
 		get_div.innerHTML += subs;		
-		
-		
 
-		
-		
 	}
 });
-
-}//setTimeout(load_content , 3400);
-//};
+}
 
