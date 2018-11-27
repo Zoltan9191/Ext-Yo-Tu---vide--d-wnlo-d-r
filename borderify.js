@@ -28,17 +28,17 @@ function createCustomButton(butName) {
 
 	 
 function load_content() {
-	console.log('extension loaded');
-var button = document.createElement("button");
-var body = document.getElementById("flex");
-//var node = document.createTextNode("\u00A0");
-//body.appendChild(node);        // create child element
-body.appendChild(button);
-button.setAttribute("onclick","document.getElementById('Help').style.display='block'");
-button.setAttribute("class", "text-center a1-low-width a1-div-a");
-button.textContent  = "Download";
+  console.log('extension loaded');
+  var button = document.createElement("button");
+  var body = document.getElementById("flex");
+  //var node = document.createTextNode("\u00A0");
+  //body.appendChild(node);        // create child element
+  body.appendChild(button);
+  button.setAttribute("onclick","document.getElementById('Help').style.display='block'");
+  button.setAttribute("class", "text-center a1-low-width a1-div-a");
+  button.textContent  = "Download";
 
-var html = " <div id=\"Help\" class=\"w3-modal\"> "+
+  var html = " <div id=\"Help\" class=\"w3-modal\"> "+
 		   " <div  class=\"w3-modal-content w3-animate-top w3-card-4\"> "+
 		   " <header class=\"w3-container w3-teal w3-center w3-padding-32\"> "+
 		   " <span onclick=\"document.getElementById('Help').style.display='none'\" "+
@@ -48,46 +48,45 @@ var html = " <div id=\"Help\" class=\"w3-modal\"> "+
 		   " onclick=\"document.getElementById('Help').style.display='none'\"> "+
 		   " close</button> </div> </div> </div>";
 		   
-var html_div = document.createElement("div");
-html_div.innerHTML = html;
+  var html_div = document.createElement("div");
+  html_div.innerHTML = html;
+ 
+  var element = document.getElementById("page-manager");  
+  element.appendChild(html_div);
 
-var element = document.getElementById("page-manager");  
-element.appendChild(html_div);
-
-var html_change_subtitles = 'function changeSubtitles() {'+
+  var html_change_subtitles = 'function changeSubtitles() {'+
 	'var sub_http = document.getElementById("subSelect").value;'+
-	'document.getElementById("subSelected").href = sub_http;'+
-	'}';
-//'console.log(sub_http); //debug value in select
-//'console.log(document.getElementById("subSelected").href); //debug value in button
+	'document.getElementById("subSelected").href = sub_http;'+'}';
+	//'console.log(sub_http); //debug value in select
+	//'console.log(document.getElementById("subSelected").href); //debug value in button
 
-/* add <script> tag */
-var html_script = document.createElement("script");
-html_script.innerHTML = html_change_subtitles;	
-element.appendChild(html_script);	
+	/* add <script> tag */
+	var html_script = document.createElement("script");
+	html_script.innerHTML = html_change_subtitles;	
+	element.appendChild(html_script);	
 
-button.addEventListener("click", function() {
+  button.addEventListener("click", function() {
 	var get_div = document.getElementById("in_div");
-    get_div.textContent  = "";  //preventing +=
+        get_div.textContent  = "";  //preventing +=
 	
 	/* Parsing */
 	var baseURL = document.getElementsByClassName("skeleton")[0].baseURI;
 	//console.log(baseURL);		
-    //var baseJS_text;
+        //var baseJS_text;
 
 	var xhr = new XMLHttpRequest();
-	xhr.addEventListener("load", function(){ html_text = this.response;  });
+	xhr.addEventListener("load", function() { html_text = this.response;  });
 	xhr.open("GET", baseURL, false); 
 	xhr.onload = function (e) {
 	  if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-        // console.log(xhr.responseText);
-        } else {
-        console.error(xhr.statusText);
-	    get_div.textContent  = "Что-то пошло не так";
-        }
-      }
-    };
+            if (xhr.status === 200) {
+            // console.log(xhr.responseText);
+            } else {
+              console.error(xhr.statusText);
+	      get_div.textContent  = "Что-то пошло не так";
+              } 
+       }
+  };
 	
 	xhr.onerror = function (e) {
 	  console.error(xhr.statusText);
@@ -122,12 +121,11 @@ button.addEventListener("click", function() {
 	 
 	//console.log(MP4_360.exec(html_text));                      //debug for url 
 	//console.log(not_private.exec(MP4_360.exec(html_text)));    //debug if url have signature%3
-    //console.log(Qual_720.exec(html_text));
-    if (not_private.exec(MP4_360.exec(html_text)) == "signature%3") {
-
+        //console.log(Qual_720.exec(html_text));
+        if (not_private.exec(MP4_360.exec(html_text)) == "signature%3") {
 		/*href 720p text if all ok */
 		if ((m = Qual_720.exec(html_text)) !== null) {
-			//console.log(m[1]);   //debug для http 
+		    //console.log(m[1]);   //debug для http 
 		    //console.log(decodeURIComponent(Qual_720.exec(html_text)[1]));
 	            var url_720_dec = decodeURIComponent(m[1]);
 		    //console.log(vid_720_http);
@@ -146,7 +144,6 @@ button.addEventListener("click", function() {
 	
 		    get_div.appendChild(center);
 			
-			
 		    setAttributes(a, {"id": "a1-div-a", "class": "text-center a1-div-a", "href": url_720_dec+'&title=720p', "type": "video/mp4", "align": "center" });
 		}
 			/*href 360p text if all ok */
@@ -155,8 +152,8 @@ button.addEventListener("click", function() {
 			//	console.log(n);      			//debug undecoded 360p url
 			//	console.log(url_360_dec[1]);    //debug decoded   360p url
 			var MP4_360_vid = '<center> <p> <a id="a1-div-a" '+
-						  'class="text-center a1-div-a" href="'+ url_360_dec[1] +
-						  '&title=360p"  type="video/mp4" download > Download 360p </a> </center>';
+					  'class="text-center a1-div-a" href="'+ url_360_dec[1] +
+					  '&title=360p"  type="video/mp4" download > Download 360p </a> </center>';
 			//get_div.innerHTML += MP4_360_vid;
 			
 			var p = document.createElement("p");
